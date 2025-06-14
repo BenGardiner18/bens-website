@@ -8,9 +8,10 @@ export async function generateStaticParams() {
   }));
 }
 
-export default async function WritingPage({ params }: { params: { slug: string } }) {
+export default async function WritingPage({ params }: { params: Promise<{ slug: string }> }) {
   try {
-    const post = await getMarkdownBySlug(params.slug, 'writings');
+    const { slug } = await params;
+    const post = await getMarkdownBySlug(slug, 'writings');
     
     return (
       <article>
